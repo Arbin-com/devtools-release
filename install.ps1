@@ -72,6 +72,57 @@ function Merge-PathEntry([string]$PathValue, [string]$Entry) {
   return [pscustomobject]@{ Changed = $true; Value = $Entry }
 }
 
+# User PATH access. Read the raw registry value WITHOUT expanding %VAR% entries and write it
+# back as REG_EXPAND_SZ, so existing entries such as %USERPROFILE%\bin survive byte for byte.
+# Read-UserPathRaw and Write-UserPathRaw are the only code that touches the registry
+# (the tests replace them).
+function Read-UserPathRaw {
+  $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Environment')
+  if (-not $key) { return '' }
+  try {
+    return [string]$key.GetValue('Path', '', [Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames)
+  } finally {
+    $key.Dispose()
+  }
+}
+
+function Write-UserPathRaw([string]$Value, [Microsoft.Win32.RegistryValueKind]$Kind) {
+  $key = [Microsoft.Win32.Registry]::CurrentUser.CreateSubKey('Environment')
+  try {
+    $key.SetValue('Path', $Value, $Kind)
+  } finally {
+    $key.Dispose()
+  }
+  Send-EnvironmentChange
+}
+
+# Tell running programs (Explorer, new shells) that the environment changed.
+function Send-EnvironmentChange {
+  try {
+    if (-not ('ArbinTools.NativeMethods' -as [type])) {
+      Add-Type -Namespace ArbinTools -Name NativeMethods -MemberDefinition @'
+[System.Runtime.InteropServices.DllImport("user32.dll", SetLastError = true, CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
+public static extern System.IntPtr SendMessageTimeout(System.IntPtr hWnd, uint Msg, System.UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out System.UIntPtr lpdwResult);
+'@
+    }
+    $result = [UIntPtr]::Zero
+    [void][ArbinTools.NativeMethods]::SendMessageTimeout([IntPtr]0xffff, 0x1A, [UIntPtr]::Zero, 'Environment', 2, 5000, [ref]$result)
+  } catch {
+    # Fallback: setting and removing a throwaway variable makes .NET broadcast the change.
+    $name = 'ARBIN_TOOLS_ENV_REFRESH'
+    [Environment]::SetEnvironmentVariable($name, '1', 'User')
+    [Environment]::SetEnvironmentVariable($name, $null, 'User')
+  }
+}
+
+# Returns $true when the directory was added to the User PATH.
+function Add-UserPathEntry([string]$Entry) {
+  $merged = Merge-PathEntry (Read-UserPathRaw) $Entry
+  if (-not $merged.Changed) { return $false }
+  Write-UserPathRaw $merged.Value ([Microsoft.Win32.RegistryValueKind]::ExpandString)
+  return $true
+}
+
 function Resolve-GitHubToken {
   $token = $env:GH_TOKEN
   if (-not $token) { $token = $env:GITHUB_TOKEN }
@@ -358,10 +409,7 @@ function Invoke-ArbinInstall([string[]]$CliArgs, [string]$DirParam, [bool]$HelpP
 
   $pathNote = ''
   if ($env:ARBIN_TOOLS_SKIP_PATH -ne '1') {
-    $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
-    $merged = Merge-PathEntry $userPath $binDir
-    if ($merged.Changed) {
-      [Environment]::SetEnvironmentVariable('Path', $merged.Value, 'User')
+    if (Add-UserPathEntry $binDir) {
       $pathNote = "Added $binDir to your User PATH; open a new terminal to pick it up."
     }
     $proc = Merge-PathEntry $env:Path $binDir

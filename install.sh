@@ -317,6 +317,8 @@ if [ "${ARBIN_TOOLS_SKIP_PATH:-}" != "1" ] && [ -n "${HOME:-}" ]; then
       ;;
     */bash)
       add_profile_line "$HOME/.bashrc"
+      # macOS login shells read ~/.bash_profile, not ~/.bashrc
+      if [ "$OS" = "osx" ]; then add_profile_line "$HOME/.bash_profile"; fi
       [ -e "$HOME/.profile" ] || add_profile_line "$HOME/.profile"
       ;;
     *)

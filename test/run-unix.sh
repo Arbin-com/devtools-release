@@ -279,6 +279,28 @@ check "original line kept" grep -F 'alias ll="ls -l"' "$T/home/.bashrc" >/dev/nu
 check "marker added" equals "$(grep -c '# arbin-tools' "$T/home/.bashrc")" 1
 done_case
 
+new_case "PATH marker also goes to ~/.bash_profile for bash on macOS"
+mkdir -p "$T/osxbin"
+printf '#!/bin/sh\ncase "$1" in -s) echo Darwin;; -m) echo arm64;; *) echo Darwin;; esac\n' > "$T/osxbin/uname"
+printf '#!/bin/sh\n[ "$1 $2" = "-a 256" ] || exit 1\nshift 2\nexec sha256sum "$@"\n' > "$T/osxbin/shasum"
+chmod +x "$T/osxbin/uname" "$T/osxbin/shasum"
+EXTRA_PATH="$T/osxbin:$W/shims-nogh"
+SKIP_PATH=""
+SHELLV="/bin/bash"
+inst unit-sim@0.1.0
+inst unit-sim@0.1.0
+check "exit 0" rc_is 0
+check ".bash_profile created with one marker" equals "$(grep -c '# arbin-tools' "$T/home/.bash_profile")" 1
+check ".bashrc has one marker" equals "$(grep -c '# arbin-tools' "$T/home/.bashrc")" 1
+done_case
+
+new_case "bash on Linux does not create ~/.bash_profile"
+SKIP_PATH=""
+SHELLV="/bin/bash"
+inst unit-sim@0.1.0
+check "no .bash_profile" no_path "$T/home/.bash_profile"
+done_case
+
 # ---- 10 --------------------------------------------------------------
 new_case "curl | sh -s -- style invocation (script on stdin)"
 (

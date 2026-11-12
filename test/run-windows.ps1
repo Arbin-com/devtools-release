@@ -293,6 +293,25 @@ $r2 = Merge-PathEntry $r1.Value $bin
 Check (-not $r2.Changed -and $r2.Value -ceq $r1.Value) 'second merge is a no-op (idempotent)'
 Complete-Case $c
 
+# ---- User PATH read/write: registry functions replaced by an in-memory fake ----
+$c = @{ Name = 'Add-UserPathEntry keeps %VAR% entries unexpanded and writes ExpandString'; Out = ''; Err = '' }
+$script:why = @()
+$script:fakePath = '%USERPROFILE%\bin;C:\Windows;%SystemRoot%\System32'
+$script:writes = @()
+function Read-UserPathRaw { $script:fakePath }
+function Write-UserPathRaw([string]$Value, [Microsoft.Win32.RegistryValueKind]$Kind) {
+  $script:writes += [pscustomobject]@{ Value = $Value; Kind = $Kind }
+  $script:fakePath = $Value
+}
+$bin = 'C:\Users\x\.arbin-tools\bin'
+Check (Add-UserPathEntry $bin) 'reports the entry as added'
+Check ($script:writes.Count -eq 1) 'wrote once'
+Check ($script:fakePath -ceq "%USERPROFILE%\bin;C:\Windows;%SystemRoot%\System32;$bin") "value was: $($script:fakePath)"
+Check ($script:writes[0].Kind -eq [Microsoft.Win32.RegistryValueKind]::ExpandString) 'kind is ExpandString'
+Check (-not (Add-UserPathEntry $bin)) 'second call reports no change'
+Check ($script:writes.Count -eq 1) 'second call does not write'
+Complete-Case $c
+
 # ---- done ----
 try { Stop-Process -Id $serverProc.Id -Force } catch {}
 Remove-Item -LiteralPath $work -Recurse -Force -ErrorAction SilentlyContinue

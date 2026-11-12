@@ -53,7 +53,7 @@ or `$ARBIN_TOOLS_HOME`, or `--dir`.
 - Keeps the version you just installed plus the 2 most recently installed others; older ones are
   removed. The active version is never removed.
 - Adds `<root>/bin` to PATH once: a line marked `# arbin-tools` in `~/.zshrc`, or in `~/.bashrc`
-  (and `~/.profile` if it does not exist) for bash, or in `~/.profile` otherwise. On Windows it adds
+  (plus `~/.profile` if it does not exist, and `~/.bash_profile` on macOS) for bash, or in `~/.profile` otherwise. On Windows it adds
   the directory to the User PATH if it is not already an entry. Open a new shell afterwards.
 - Runs `<tool> version` and prints the result.
 
