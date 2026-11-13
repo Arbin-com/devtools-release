@@ -1,0 +1,47 @@
+{
+  "tool": "unit-sim",
+  "version": "0.1.0-rc.1",
+  "published": "2026-11-13T09:21:58Z",
+  "platforms": {
+    "win-x64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "unit-sim@0.1.0-rc.1",
+      "github_asset": "unit-sim-0.1.0-rc.1-win-x64.zip",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/743042048",
+      "sha256": "128ac25595435be874887bb69e329eb08a177acc9f3bdab42bdc68383274d0be"
+    },
+    "linux-x64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "unit-sim@0.1.0-rc.1",
+      "github_asset": "unit-sim-0.1.0-rc.1-linux-x64.tar.gz",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/743042114",
+      "sha256": "7a06bd1020e658df1ef88b9378e387f01d840a415fb6a84905158f0db4582f3f"
+    },
+    "linux-arm64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "unit-sim@0.1.0-rc.1",
+      "github_asset": "unit-sim-0.1.0-rc.1-linux-arm64.tar.gz",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/743042194",
+      "sha256": "084f58d0ea17bb11a16d64ff0d9834e61d5e2b3efe81c52c0265213d492be2f4"
+    },
+    "osx-x64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "unit-sim@0.1.0-rc.1",
+      "github_asset": "unit-sim-0.1.0-rc.1-osx-x64.tar.gz",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/743042246",
+      "sha256": "dbbd4e084aacf2debdab3bc55b5ff1c753119c5e6d7dc3b8341337ebeb93ae2b"
+    },
+    "osx-arm64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "unit-sim@0.1.0-rc.1",
+      "github_asset": "unit-sim-0.1.0-rc.1-osx-arm64.tar.gz",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/743042321",
+      "sha256": "89cb9af6c58428c0c8f1c8c366ad7d5b5b52d35606fdbea3df422a4a028f9892"
+    }
+  }
+}
