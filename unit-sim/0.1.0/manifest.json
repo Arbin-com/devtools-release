@@ -1,0 +1,47 @@
+{
+  "tool": "unit-sim",
+  "version": "0.1.0",
+  "published": "2026-11-13T10:12:30Z",
+  "platforms": {
+    "win-x64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "unit-sim@0.1.0",
+      "github_asset": "unit-sim-0.1.0-win-x64.zip",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/743184469",
+      "sha256": "8b0f5e97c2be4159dad9bf7a4bddd34051380ba58184ee440d6875c31304870a"
+    },
+    "linux-x64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "unit-sim@0.1.0",
+      "github_asset": "unit-sim-0.1.0-linux-x64.tar.gz",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/743184522",
+      "sha256": "7eb01c1bb278d532fe13473c1c9d48a206afb7a63052aa5f7b4f5d72cb8bee18"
+    },
+    "linux-arm64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "unit-sim@0.1.0",
+      "github_asset": "unit-sim-0.1.0-linux-arm64.tar.gz",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/743184608",
+      "sha256": "b8f644f7febd702ab1a1a5fd66751795b3b1f88a23d474620a63a6b5d8a0eaff"
+    },
+    "osx-x64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "unit-sim@0.1.0",
+      "github_asset": "unit-sim-0.1.0-osx-x64.tar.gz",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/743184686",
+      "sha256": "cb69ccea55fe350a3038853d9ab50b686edab3005e4a8c913365397ef71ced0f"
+    },
+    "osx-arm64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "unit-sim@0.1.0",
+      "github_asset": "unit-sim-0.1.0-osx-arm64.tar.gz",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/743184728",
+      "sha256": "6c64d4fc887e536207033f38051b28939813714a4bcdd73355a0f792f9aa6cb0"
+    }
+  }
+}
