@@ -1,0 +1,23 @@
+{
+  "tool": "tailcat-cli",
+  "version": "0.1.0",
+  "published": "2026-11-26T03:38:02Z",
+  "platforms": {
+    "windows-amd64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "tailcat-cli@0.1.0",
+      "github_asset": "tailcat-cli-0.1.0-windows-amd64.zip",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/794182866",
+      "sha256": "486f58cd85a7cde875cfb1e278b49eb96437a0b4a77ab55a2926fbef7446ca83"
+    },
+    "linux-amd64": {
+      "github_owner": "Arbin-com",
+      "github_repo": "Others-develop",
+      "github_tag": "tailcat-cli@0.1.0",
+      "github_asset": "tailcat-cli-0.1.0-linux-amd64.tar.gz",
+      "github_asset_api_url": "https://api.github.com/repos/Arbin-com/Others-develop/releases/assets/794182921",
+      "sha256": "50ccc68bd140914dc2a4cc03029b8ab982a592d8e92e72040881cbb531cf05f8"
+    }
+  }
+}
